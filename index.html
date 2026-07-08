@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صدقة جارية - العداد الإلكتروني</title>
+    <title>صدقة جارية - العداد والأدعية</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,7 +30,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 40px auto;
             padding: 20px;
         }
@@ -39,11 +39,14 @@
             padding: 40px 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
         h2 {
             color: #2c5282;
             margin-top: 0;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
         }
         /* تصميم قائمة اختيار الذكر */
         .select-box {
@@ -95,7 +98,6 @@
         .btn-style:active {
             transform: scale(0.98);
         }
-        /* زر إعادة التصفير */
         .reset-btn {
             background: none;
             border: none;
@@ -104,6 +106,18 @@
             margin-top: 15px;
             font-size: 1rem;
             text-decoration: underline;
+        }
+        /* تصميم قسم الأدعية الجديد */
+        .dua-item {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-right: 4px solid #3182ce;
+            border-radius: 4px;
+            text-align: right;
         }
         footer {
             margin-top: 60px;
@@ -118,16 +132,16 @@
 
     <header>
         <h1>صدقة جارية</h1>
-        <p>اللهم اغفر لـ (جدتي أم أمي، وجدتي أم أبي، وجدي، وخالي، وعمتي) وارحمهم وأسكنهم فسيح جناتك</p>
+        <p>اللهم اغفر لـ (جدتي سماح ، وجدتي فاطمة، وجدي بشير، وخالي صالح، وعمتي قمر) وارحمهم وأسكنهم فسيح جناتك</p>
     </header>
 
     <div class="container">
 
+        <!-- القسم الأول: العداد الإلكتروني -->
         <div class="card">
             <h2>السبحة الإلكترونية التفاعلية</h2>
-            <p style="color: #718096;">اختر الذكر من القائمة واضغط على الزر للتسبيح، ولكم بمثل الأجر إن شاء الله</p>
+            <p style="color: #718096;">اختر الذكر واضغط على الزر للتسبيح، ولكم بمثل الأجر إن شاء الله</p>
             
-            <!-- قائمة اختيار الذكر -->
             <div class="select-box">
                 <select id="dhikrSelect" onchange="updateButtonText()">
                     <option value="أستغفر الله العظيم وأتوب إليه">أستغفر الله العظيم وأتوب إليه</option>
@@ -138,13 +152,26 @@
                 </select>
             </div>
 
-            <!-- العداد والزر -->
             <div class="counter-box">
                 <div class="counter-number" id="counter">0</div>
                 <button class="btn-style" id="dhikrBtn" onclick="incrementCounter()">أستغفر الله العظيم وأتوب إليه</button>
                 <br>
                 <button class="reset-btn" onclick="resetCounter()">تصفير العداد</button>
             </div>
+        </div>
+
+        <!-- القسم الثاني الجديد: أدعية للمتوفين -->
+        <div class="card">
+            <h2>أدعية مأثورة للمتوفين</h2>
+            <p style="color: #718096; text-align: right; margin-bottom: 20px;">اللهم تقبل دعاءنا لهم وارفع درجاتهم:</p>
+            
+            <div class="dua-item">اللهم اغفر لهم وارحمهم، وعافهم واعف عنهم، وأكرم نزلهم، ووسع مدخلهم، واغسلهم بالماء والثلج والبرد، ونقهم من الخطايا كما ينقى الثوب الأبيض من الدنس.</div>
+            
+            <div class="dua-item">اللهم ارحم أجدادي وجداتي، وخالي، وعمتي، واجعل قبورهم روضة من رياض الجنة، واملأها بالرضا والنور والفسحة والسرور.</div>
+            
+            <div class="dua-item">اللهم إنهم في ذمتك وحبل جوارك، فَقِهم من فتنة القبر وعذاب النار، وأنت أهل الوفاء والحق، فاغفر لهم وارحمهم إنك أنت الغفور الرحيم.</div>
+            
+            <div class="dua-item">اللهم جازهم بالإحسان إحساناً، وبالسيئات عفواً وغفراناً، واجمعنا بهم في جنات النعيم من غير حساب ولا سابق عذاب.</div>
         </div>
 
     </div>
@@ -156,20 +183,17 @@
     <script>
         let count = 0;
 
-        // دالة لزيادة العداد عند الضغط
         function incrementCounter() {
             count++;
             document.getElementById("counter").innerText = count;
         }
 
-        // دالة لتحديث نص الزر بناءً على الذكر المختار
         function updateButtonText() {
             const selectElement = document.getElementById("dhikrSelect");
             const selectedText = selectElement.options[selectElement.selectedIndex].value;
             document.getElementById("dhikrBtn").innerText = selectedText;
         }
 
-        // دالة لتصفير العداد
         function resetCounter() {
             count = 0;
             document.getElementById("counter").innerText = count;
