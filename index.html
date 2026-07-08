@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صدقة جارية</title>
+    <title>صدقة جارية - العداد الإلكتروني</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -27,56 +27,50 @@
             font-size: 1.2rem;
             opacity: 0.9;
             margin-top: 10px;
+            line-height: 1.6;
         }
         .container {
-            max-width: 800px;
-            margin: 30px auto;
+            max-width: 600px;
+            margin: 40px auto;
             padding: 20px;
         }
         .card {
             background: #fff;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 40px 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         h2 {
             color: #2c5282;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
             margin-top: 0;
+            font-size: 1.5rem;
         }
-        .dua-text {
-            font-size: 1.25rem;
-            line-height: 1.8;
-            color: #4a5568;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f7fafc;
-            border-right: 4px solid #3182ce;
-            border-radius: 4px;
-            text-align: right;
+        /* تصميم قائمة اختيار الذكر */
+        .select-box {
+            margin: 20px 0;
         }
-        .quran-text {
-            font-family: 'Traditional Arabic', Times, serif;
-            font-size: 1.6rem;
-            line-height: 2.2;
-            text-align: justify;
-            color: #2d3748;
-            background: #fffaf0;
-            padding: 20px;
+        select {
+            font-size: 1.2rem;
+            font-family: inherit;
+            padding: 10px 20px;
             border-radius: 8px;
-            border: 1px solid #feebc8;
+            border: 2px solid #3182ce;
+            background-color: white;
+            color: #2c5282;
+            width: 100%;
+            max-width: 350px;
+            cursor: pointer;
+            outline: none;
         }
-        /* أزرار الاستغفار */
         .counter-box {
-            padding: 20px;
+            padding: 30px 20px;
             background: #ebf8ff;
             border-radius: 8px;
             border: 1px solid #bee3f8;
+            margin-top: 20px;
         }
         .counter-number {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: bold;
             color: #2b6cb0;
             margin: 10px 0;
@@ -85,18 +79,34 @@
             background-color: #3182ce;
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border-radius: 25px;
+            padding: 15px 40px;
+            font-size: 1.4rem;
+            border-radius: 30px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
             box-shadow: 0 4px 6px rgba(49, 130, 206, 0.3);
+            width: 100%;
+            max-width: 350px;
+            font-weight: bold;
         }
         .btn-style:hover {
             background-color: #2b6cb0;
         }
+        .btn-style:active {
+            transform: scale(0.98);
+        }
+        /* زر إعادة التصفير */
+        .reset-btn {
+            background: none;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1rem;
+            text-decoration: underline;
+        }
         footer {
-            margin-top: 50px;
+            margin-top: 60px;
             padding: 20px;
             background: #2d3748;
             color: #a0aec0;
@@ -113,27 +123,58 @@
 
     <div class="container">
 
-        <!-- قسم الاستغفار التفاعلي -->
         <div class="card">
-            <h2>عداد الاستغفار الإلكتروني</h2>
-            <p>اضغط على الزر للاستغفار لهم، ولك بمثل الأجر إن شاء الله</p>
+            <h2>السبحة الإلكترونية التفاعلية</h2>
+            <p style="color: #718096;">اختر الذكر من القائمة واضغط على الزر للتسبيح، ولكم بمثل الأجر إن شاء الله</p>
+            
+            <!-- قائمة اختيار الذكر -->
+            <div class="select-box">
+                <select id="dhikrSelect" onchange="updateButtonText()">
+                    <option value="أستغفر الله العظيم وأتوب إليه">أستغفر الله العظيم وأتوب إليه</option>
+                    <option value="سبحان الله وبحمده">سبحان الله وبحمده</option>
+                    <option value="الحمد لله">الحمد لله</option>
+                    <option value="الله أكبر">الله أكبر</option>
+                    <option value="لا إله إلا الله">لا إله إلا الله</option>
+                </select>
+            </div>
+
+            <!-- العداد والزر -->
             <div class="counter-box">
                 <div class="counter-number" id="counter">0</div>
-                <button class="btn-style" onclick="incrementCounter()">أستغفر الله العظيم وأتوب إليه</button>
+                <button class="btn-style" id="dhikrBtn" onclick="incrementCounter()">أستغفر الله العظيم وأتوب إليه</button>
+                <br>
+                <button class="reset-btn" onclick="resetCounter()">تصفير العداد</button>
             </div>
         </div>
 
-        <!-- قسم الأدعية -->
-        <div class="card">
-            <h2>أدعية للمتوفين</h2>
-            <div class="dua-text">اللهم اغفر لهم وارحمهم، وعافهم واعف عنهم، وأكرم نزلهم، ووسع مدخلهم، واغسلهم بالماء والثلج والبرد.</div>
-            <div class="dua-text">اللهم ارحم أجدادي، وخالي، وعمتي، واجعل قبورهم روضة من رياض الجنة، ولا تجعلها حفرة من حفر النيران.</div>
-            <div class="dua-text">اللهم إنهم في ذمتك وحبل جوارك، فَقِهم من فتنة القبر وعذاب النار، وأنت أهل الوفاء والحق، فاغفر لهم وارحمهم إنك أنت الغفور الرحيم.</div>
-            <div class="dua-text">اللهم يمّن كتابهم، ويسّر حسابهم، وثقّل بالحسنات ميزانهم، وثبّت على الصراط أقدامهم، وأسكنهم في أعلى الجنات بجوار حبيبك ومصطفاك ﷺ.</div>
-        </div>
+    </div>
 
-        <!-- قسم القرآن الكريم -->
-        <div class="card">
-            <h2>سورة الملك (المنجية من عذاب القبر)</h2>
-            <div class="quran-text">
-                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ ﴿١﴾ الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ الْعَزِيزُ الْغَفُورُ ﴿٢﴾ الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ ۖ فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ ﴿٣﴾ ثُمَّ ارْجِعِ الْبَصَرَ كَرَّتَيْنِ يَنقَلِبْ إِلَيْكَ الْبَصَرُ خَاسِئًا وَهُوَ حَسِيرٌ ﴿٤﴾ وَلَقَدْ زَيَّنَّا السَّمَاءَ الدُّنْيَا بِمَصَابِيحَ وَجَعَلْنَاهَا رُجُومًا لِّلشَّيَاطِينِ ۖ وَأَعْتَدْنَا لَهُمْ عَذَابَ السَّعِيرِ ﴿٥﴾ وَلِلَّذِينَ كَفَرُوا بِرَبِّهِمْ عَذَابُ جَهَنَّمَ ۖ وَبِئْسَ الْمَصِيرُ ﴿٦﴾ إِذَا أُلْقُوا فِيهَا سَمِعُوا لَهَا شَهِيقًا وَهِيَ تَفُورُ ﴿٧﴾ تَكَادُ تَمَيَّزُ مِنَ الْغَيْظِ ۖ كُلَّمَا أُلْقِيَ فِيهَا فَوْجٌ سَأَلَهُمْ خَزَنَتُهَا أَلَمNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+    <footer>
+        <p>الدال على الخير كفاعله - انشر الموقع ليتضاعف الأجر</p>
+    </footer>
+
+    <script>
+        let count = 0;
+
+        // دالة لزيادة العداد عند الضغط
+        function incrementCounter() {
+            count++;
+            document.getElementById("counter").innerText = count;
+        }
+
+        // دالة لتحديث نص الزر بناءً على الذكر المختار
+        function updateButtonText() {
+            const selectElement = document.getElementById("dhikrSelect");
+            const selectedText = selectElement.options[selectElement.selectedIndex].value;
+            document.getElementById("dhikrBtn").innerText = selectedText;
+        }
+
+        // دالة لتصفير العداد
+        function resetCounter() {
+            count = 0;
+            document.getElementById("counter").innerText = count;
+        }
+    </script>
+
+</body>
+</html>
